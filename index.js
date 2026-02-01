@@ -1,11 +1,15 @@
 import express from 'express';
+
 import usersRouter from './routes/users.js';
 import authRouter from './routes/auth.js';
+
+const app = express();
 
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
-const app = express();
+//middleware
+app.use(express.json());
 
 const options = {
   definition: {
@@ -25,13 +29,10 @@ const options = {
 };
 
 const specs = swaggerJSDoc(options);
-app.use('/', swaggerUi.serve, swaggerUi.setup(specs));
-
-//middleware
-app.use(express.json());
+app.use('/api', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/auth', authRouter);
-app.use('/users', usersRouter);
+app.use('/', usersRouter);
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
