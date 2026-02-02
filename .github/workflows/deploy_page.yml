@@ -1,32 +1,34 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: NodeJS App Build & Deployment
+name: Deploy Node.js App to cPanel
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ['main']
+    branches:
+      - main # or your default branch name
 
 jobs:
-  FTP-Deploy-Action:
-    name: FTP Deploy Action
+  web-deploy:
+    name: Deploy
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Install Dependencies
+      - name: Install Node.js dependencies
         run: npm install
-      - name: FTP Deploy To Cpanel Server
-        uses: SamKirkland/FTP-Deploy-Action@3.1.1
+
+      # If your app requires a build step (like Next.js), add it here
+      # - name: Build application
+      #   run: npm run build
+
+      - name: Upload files to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          ftp-server: ${{ secrets.FTP_SERVER_IP }}
-          ftp-username: ${{ secrets.FTP_USERNAME }}
-          ftp-password: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ secrets.FTP_SERVER_IP }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: public_html/efuturemedia.in/nodeadmin/ # The application root defined in cPanel
+          exclude: |
+            .git/
+            .github/
+            node_modules/
+            # add any other files/folders you don't want to upload
