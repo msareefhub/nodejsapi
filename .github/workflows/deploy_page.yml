@@ -22,10 +22,6 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-
-      - name: Build Project
-        run: npm run build
-
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
@@ -33,4 +29,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist
-          server-dir: /public_html/nodejsapi
+          server-dir: /public_html/efuturemedia.in/nodeadmin
