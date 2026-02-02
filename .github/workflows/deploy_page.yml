@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -25,8 +27,6 @@ jobs:
       - name: FTP Deploy To Cpanel Server
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server-ip: ${{ secrets.FTP_SERVER_IP }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist
-          server-dir: /public_html/efuturemedia.in/nodeadmin
+          ftp-server: ${{ secrets.FTP_SERVER_IP }}
+          ftp-username: ${{ secrets.FTP_USERNAME }}
+          ftp-password: ${{ secrets.FTP_PASSWORD }}
