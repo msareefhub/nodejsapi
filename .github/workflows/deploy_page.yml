@@ -22,7 +22,7 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-      - name: FTP Deploy
+      - name: FTP Deploy To Cpanel Server
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server-ip: ${{ secrets.FTP_SERVER_IP }}
