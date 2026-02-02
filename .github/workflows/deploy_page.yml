@@ -25,7 +25,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: FTP Deploy To Cpanel Server
-        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        uses: SamKirkland/FTP-Deploy-Action@3.1.1
         with:
           ftp-server: ${{ secrets.FTP_SERVER_IP }}
           ftp-username: ${{ secrets.FTP_USERNAME }}
