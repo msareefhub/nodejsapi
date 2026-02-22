@@ -1,7 +1,10 @@
 import express from 'express';
+import dotenv from 'dotenv';
 
 import usersRouter from './routes/users.js';
 import authRouter from './routes/auth.js';
+
+dotenv.config();
 
 const app = express();
 
@@ -21,7 +24,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000',
+        url: process.env.BASE_URL,
       },
     ],
   },

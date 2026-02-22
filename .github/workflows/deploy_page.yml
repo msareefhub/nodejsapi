@@ -26,9 +26,8 @@ jobs:
           server: ${{ secrets.FTP_SERVER_IP }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: public_html/efuturemedia.in/nodeadmin/ # The application root defined in cPanel
+          server-dir: / # The application root defined in cPanel
           exclude: |
             .git/
             .github/
             node_modules/
-            # add any other files/folders you don't want to upload
