@@ -1,5 +1,6 @@
 import expreess from 'express';
-import { getUser, getUserById } from '../controllers/user.js';
+import { authenticateToken } from '../controllers/auth.js';
+import { getUser, getUserById, login } from '../controllers/user.js';
 
 const router = expreess.Router();
 
@@ -27,7 +28,7 @@ const router = expreess.Router();
  *                      schema:
  *                          $ref: 'components/schemas/Users'
  */
-router.get('/users', getUser);
+router.get('/users', authenticateToken, getUser);
 
 /**
  * @swagger
@@ -50,6 +51,30 @@ router.get('/users', getUser);
  *                      schema:
  *                          $ref: 'components/schemas/Users'
  */
-router.get('/users/:id', getUserById);
+router.get('/users/:id', authenticateToken, getUserById);
+
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: Generate JWT Token
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Token generated successfully
+ */
+
+router.post('/login', login);
 
 export default router;

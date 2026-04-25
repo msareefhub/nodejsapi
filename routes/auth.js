@@ -1,5 +1,6 @@
 import express from 'express';
-import { register, addEmployee, login, logout } from '../controllers/auth.js';
+import { authenticateToken } from '../controllers/auth.js';
+import { register, addEmployee, logout } from '../controllers/auth.js';
 
 const router = express.Router();
 
@@ -45,7 +46,7 @@ const router = express.Router();
  *          200:
  *              description: User has been created
  */
-router.post('/register', register);
+router.post('/register', authenticateToken, register);
 
 /**
  * @swagger
@@ -77,25 +78,7 @@ router.post('/register', register);
  *          200:
  *              description: Emoployee has been created
  */
-router.post('/addemployee', addEmployee);
-
-/**
- * @swagger
- * /auth/login:
- *  post:
- *      summary: Login a user
- *      description: Login a user
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/User'
- *      responses:
- *          200:
- *              description: User has been logged in
- */
-router.post('/login', login);
+router.post('/addemployee', authenticateToken, addEmployee);
 
 /**
  * @swagger
@@ -113,6 +96,6 @@ router.post('/login', login);
  *          200:
  *              description: User has been logged out
  */
-router.post('/logout', logout);
+router.post('/logout', authenticateToken, logout);
 
 export default router;

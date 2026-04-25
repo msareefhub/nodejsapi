@@ -1,5 +1,34 @@
 import { db } from '../connect.js';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
+const SECRET_KEY = '123456789abcdef';
+
+export const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+
+  // Format: Bearer TOKEN
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({
+      status: false,
+      message: 'Access token required',
+    });
+  }
+
+  jwt.verify(token, SECRET_KEY, (err, user) => {
+    if (err) {
+      return res.status(403).json({
+        status: false,
+        message: 'Invalid or expired token',
+      });
+    }
+
+    req.user = user;
+    next();
+  });
+};
 
 export const register = (req, res) => {
   const getQuery = 'SELECT * FROM users WHERE user_name = ?';
@@ -55,9 +84,31 @@ export const addEmployee = (req, res) => {
   });
 };
 
-export const login = (req, res) => {
-  //TODO: Add logic to get user
-};
+// export const login = (req, res) => {
+//   const { username, password } = req.body;
+
+//   // Dummy validation
+//   if (username === 'admin' && password === '123456') {
+//     const token = jwt.sign(
+//       {
+//         username,
+//       },
+//       SECRET_KEY,
+//       { expiresIn: '1h' },
+//     );
+
+//     return res.status(200).json({
+//       status: true,
+//       message: 'Login successful',
+//       token,
+//     });
+//   }
+
+//   return res.status(401).json({
+//     status: false,
+//     message: 'Invalid credentials',
+//   });
+// };
 
 export const logout = (req, res) => {
   //TODO: Add logic to get user
