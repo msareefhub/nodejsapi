@@ -1,8 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
 
-import usersRouter from './routes/users.js';
 import authRouter from './routes/auth.js';
+import usersRouter from './routes/users.js';
+import employeeRouter from './routes/employee.js';
 
 dotenv.config();
 
@@ -18,9 +19,9 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Node.js API with Swagger + JWT',
+      title: 'HR Payroll API',
       version: '1.0.0',
-      description: 'API Documentation using swagger-jsdoc',
+      description: 'API Documentation for HR Payroll App',
     },
 
     servers: [
@@ -61,10 +62,11 @@ app.use(
   }),
 );
 
-app.use('/auth', authRouter);
+app.use('/', authRouter);
 app.use('/', usersRouter);
+app.use('/', employeeRouter);
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
-  console.log(`Swagger Docs: http://localhost:3000/api`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
+  console.log(`Swagger Docs: ${process.env.API_URL}`);
 });

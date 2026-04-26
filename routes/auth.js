@@ -1,6 +1,6 @@
 import express from 'express';
 import { authenticateToken } from '../controllers/auth.js';
-import { register, addEmployee, logout } from '../controllers/auth.js';
+import { register, login } from '../controllers/auth.js';
 
 const router = express.Router();
 
@@ -35,6 +35,7 @@ const router = express.Router();
  * /auth/register:
  *  post:
  *      summary: Register a new user
+ *      tags: [User]
  *      description: Register a new user
  *      requestBody:
  *          required: true
@@ -50,52 +51,26 @@ router.post('/register', authenticateToken, register);
 
 /**
  * @swagger
- * components:
- *  schemas:
- *      User:
- *          type: object
- *          required:
- *              - employee_code
- *          properties:
- *              employee_code:
- *                  type: number
- *                  description: The employee id
+ * /login:
+ *   post:
+ *     summary: Generate JWT Token
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Token generated successfully
  */
 
-/**
- * @swagger
- * /auth/addemployee:
- *  post:
- *      summary: Add New Employee
- *      description: Add New Employee
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/User'
- *      responses:
- *          200:
- *              description: Emoployee has been created
- */
-router.post('/addemployee', authenticateToken, addEmployee);
-
-/**
- * @swagger
- * /auth/logout:
- *  post:
- *      summary: Logout a user
- *      description: Logout a user
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/User'
- *      responses:
- *          200:
- *              description: User has been logged out
- */
-router.post('/logout', authenticateToken, logout);
+router.post('/login', login);
 
 export default router;
