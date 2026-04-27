@@ -55,7 +55,7 @@ export const register = (req, res) => {
   });
 };
 
-export const login = (req, res) => {
+export const token = (req, res) => {
   const { username, password } = req.body;
 
   // Dummy validation
@@ -70,8 +70,9 @@ export const login = (req, res) => {
 
     return res.status(200).json({
       status: true,
-      message: 'Login successful',
-      token,
+      'user Name': username,
+      message: 'JWT Token',
+      token: `Bearer ${token}`,
     });
   }
 

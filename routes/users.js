@@ -29,7 +29,7 @@ const router = expreess.Router();
  *                      schema:
  *                          $ref: 'components/schemas/Users'
  */
-router.get('/users', authenticateToken, getUser);
+router.get('/', authenticateToken, getUser);
 
 /**
  * @swagger
@@ -53,6 +53,6 @@ router.get('/users', authenticateToken, getUser);
  *                      schema:
  *                          $ref: 'components/schemas/Users'
  */
-router.get('/users/:id', authenticateToken, getUserById);
+router.get('/:id', authenticateToken, getUserById);
 
 export default router;

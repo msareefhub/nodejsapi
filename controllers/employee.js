@@ -1,6 +1,15 @@
 import { db } from '../connect.js';
 import jwt from 'jsonwebtoken';
 
+export const getEmployeeById = (req, res) => {
+  const getQuery = 'CALL getEmployeeById(?)';
+
+  db.query(getQuery, [req.params.id], (err, result) => {
+    if (err) return res.status(500).json(err);
+    return res.status(200).json({ success: true, data: result });
+  });
+};
+
 export const getAllEmployee = (req, res) => {
   const getQuery = 'CALL getEmployee()';
 

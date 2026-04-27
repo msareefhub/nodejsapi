@@ -63,8 +63,8 @@ app.use(
 );
 
 app.use('/', authRouter);
-app.use('/', usersRouter);
-app.use('/', employeeRouter);
+app.use('/users', usersRouter);
+app.use('/employees', employeeRouter);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

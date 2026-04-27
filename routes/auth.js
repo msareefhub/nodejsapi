@@ -1,6 +1,6 @@
 import express from 'express';
 import { authenticateToken } from '../controllers/auth.js';
-import { register, login } from '../controllers/auth.js';
+import { register, token } from '../controllers/auth.js';
 
 const router = express.Router();
 
@@ -49,28 +49,6 @@ const router = express.Router();
  */
 router.post('/register', authenticateToken, register);
 
-/**
- * @swagger
- * /login:
- *   post:
- *     summary: Generate JWT Token
- *     tags: [Authentication]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *               password:
- *                 type: string
- *     responses:
- *       200:
- *         description: Token generated successfully
- */
-
-router.post('/login', login);
+router.post('/token', token);
 
 export default router;

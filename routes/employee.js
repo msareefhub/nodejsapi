@@ -1,6 +1,10 @@
 import expreess from 'express';
 import { authenticateToken } from '../controllers/auth.js';
-import { getAllEmployee, addEmployee } from '../controllers/employee.js';
+import {
+  getEmployeeById,
+  getAllEmployee,
+  addEmployee,
+} from '../controllers/employee.js';
 
 const router = expreess.Router();
 
@@ -29,7 +33,31 @@ const router = expreess.Router();
  *                      schema:
  *                          $ref: 'components/schemas/Employees'
  */
-router.get('/employees', authenticateToken, getAllEmployee);
+router.get('/', authenticateToken, getAllEmployee);
+
+/**
+ * @swagger
+ * /employees/{id}:
+ *  get:
+ *      summary: Find a employee by ID
+ *      tags: [Employee]
+ *      description: Find a employee in the database by ID
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: integer
+ *            required: true
+ *            description: The employee ID
+ *      responses:
+ *          200:
+ *              description: Employee has been found
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: 'components/schemas/Employees'
+ */
+router.get('/:id', authenticateToken, getEmployeeById);
 
 /**
  * @swagger
